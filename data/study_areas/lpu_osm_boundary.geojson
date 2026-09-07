@@ -1,0 +1,53 @@
+{
+  "type": "FeatureCollection",
+  "name": "LPU_OSM_Verified_Boundary",
+  "crs": {
+    "type": "name",
+    "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" }
+  },
+  "metadata": {
+    "source": "OpenStreetMap Nominatim / Way 422435593",
+    "display_name": "Lovely Professional University, NH44, Phagwara, Kapurthala, Punjab 144411, India",
+    "osm_type": "way",
+    "osm_id": 422435593,
+    "provenance": "HISTORICAL",
+    "boundingbox": ["31.2457534", "31.2609695", "75.6978055", "75.7092374"],
+    "centroid": [75.7032788, 31.2533133]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "way/422435593",
+      "properties": {
+        "id": "lpu_main_campus",
+        "name": "Lovely Professional University",
+        "amenity": "university",
+        "highway_access": "NH44",
+        "city": "Phagwara",
+        "district": "Kapurthala",
+        "state": "Punjab",
+        "country": "India",
+        "data_source": "OpenStreetMap (ODbL 1.0)",
+        "provenance": "HISTORICAL",
+        "verified": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [75.6978055, 31.2465000],
+            [75.7020000, 31.2457534],
+            [75.7075000, 31.2468000],
+            [75.7092374, 31.2515000],
+            [75.7090000, 31.2580000],
+            [75.7070000, 31.2609695],
+            [75.7015000, 31.2605000],
+            [75.6985000, 31.2570000],
+            [75.6978055, 31.2525000],
+            [75.6978055, 31.2465000]
+          ]
+        ]
+      }
+    }
+  ]
+}

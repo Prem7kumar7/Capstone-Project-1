@@ -1,0 +1,41 @@
+{
+  "type": "FeatureCollection",
+  "name": "NH44_Grand_Trunk_Road_Segment",
+  "metadata": {
+    "source": "OpenStreetMap Highway Trunk Network",
+    "highway_ref": "NH44",
+    "section": "Jalandhar - Phagwara Corridor passing Lovely Professional University",
+    "provenance": "HISTORICAL",
+    "verified": true
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "osm_nh44_phagwara_corridor",
+        "name": "NH-44 (Grand Trunk Road)",
+        "ref": "NH44",
+        "highway": "trunk",
+        "surface": "asphalt",
+        "jurisdiction": "National Highways Authority of India (NHAI)",
+        "adjacent_to": "Lovely Professional University",
+        "data_source": "OpenStreetMap",
+        "provenance": "HISTORICAL",
+        "verified": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [75.6942, 31.2648],
+          [75.6965, 31.2582],
+          [75.6980, 31.2533],
+          [75.7001, 31.2472],
+          [75.7032, 31.2405],
+          [75.7145, 31.2312],
+          [75.7485, 31.2265],
+          [75.7735, 31.2245]
+        ]
+      }
+    }
+  ]
+}

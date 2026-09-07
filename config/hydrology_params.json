@@ -1,0 +1,67 @@
+{
+  "description": "Data-driven hydrological parameters for Urban Flood Nowcasting System (LPU & Phagwara Basin)",
+  "version": "1.0.0",
+  "provenance": "DERIVED_ENGINEERING_STANDARDS",
+  "references": [
+    "USDA NRCS National Engineering Handbook (Part 630 Hydrology)",
+    "Central Water Commission (CWC) India Flood Estimation Guidelines",
+    "Indian Road Congress IRC:SP:42 Drainage Guidelines"
+  ],
+  "study_area_id": "lpu_main_campus",
+  "soil_hydrologic_group": "B",
+  "soil_description": "Alluvial silt loam and sandy loam typical of Punjab Bist Doab plains",
+  "initial_abstraction_ratio_lambda": 0.20,
+  "available_lambda_options": [0.05, 0.20],
+  "curve_numbers": {
+    "impervious_paved_roof": {
+      "cn_value": 98,
+      "description": "Paved roads, parking lots, roofs, concrete plazas",
+      "impervious_fraction": 1.0
+    },
+    "academic_complex": {
+      "cn_value": 92,
+      "description": "University academic blocks with surrounding paved pathways",
+      "impervious_fraction": 0.85
+    },
+    "hostel_residential": {
+      "cn_value": 79,
+      "description": "Residential hostel blocks with interspersed lawns and gardens",
+      "impervious_fraction": 0.65
+    },
+    "open_lawns_parks": {
+      "cn_value": 69,
+      "description": "Sports grounds, central lawns, landscaped greenery (Fair condition)",
+      "impervious_fraction": 0.15
+    },
+    "agricultural_fringe": {
+      "cn_value": 72,
+      "description": "Cultivated fields surrounding the campus perimeter",
+      "impervious_fraction": 0.05
+    }
+  },
+  "manning_roughness": {
+    "concrete_conduit": 0.013,
+    "lined_storm_channel": 0.015,
+    "roadside_earthen_swale": 0.035,
+    "overland_sheet_asphalt": 0.016,
+    "overland_sheet_soil_grass": 0.040
+  },
+  "rational_coefficients": {
+    "impervious_roof": 0.90,
+    "campus_pavement": 0.85,
+    "hostels_compact": 0.65,
+    "lawns_permeable": 0.25,
+    "agricultural_land": 0.35
+  },
+  "depression_storage_mm": {
+    "impervious_pavement": 2.5,
+    "lawn_and_soil": 5.0
+  },
+  "risk_score_weights": {
+    "forecast_rainfall_intensity": 0.30,
+    "cumulative_rainfall": 0.20,
+    "terrain_depression_index": 0.25,
+    "drainage_inadequacy_proxy": 0.15,
+    "impervious_fraction": 0.10
+  }
+}

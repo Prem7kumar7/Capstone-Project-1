@@ -3,13 +3,23 @@
 .env.local
 *.env
 
-# Dependencies
+# Dependencies & Build Artifacts
 node_modules/
+.next/
+out/
+build/
+dist/
 __pycache__/
 *.pyc
+*.pyo
 venv/
 .venv/
 env/
+.pytest_cache/
+
+# Local databases
+*.db
+*.sqlite3
 
 # Editor & OS files
 .vscode/
