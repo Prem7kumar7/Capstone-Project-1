@@ -8,9 +8,11 @@ from backend.app.api.alerts import router as alerts_router
 from backend.app.api.data_health import router as data_health_router
 from backend.app.api.validation import router as validation_router
 from backend.app.api.hydrology_config import router as hydrology_config_router
+from backend.app.api.canonical import router as canonical_router
 
 api_router = APIRouter()
 
+api_router.include_router(canonical_router)
 api_router.include_router(study_area_router)
 api_router.include_router(weather_router)
 api_router.include_router(nowcasting_router)

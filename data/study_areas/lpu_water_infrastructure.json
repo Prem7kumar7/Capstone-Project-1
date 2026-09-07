@@ -1,0 +1,35 @@
+{
+  "organization": "Lovely Professional University (LPU)",
+  "location": "NH-44, Phagwara / Chaheru, Punjab 144411",
+  "documentation_source": "LPU Campus Sustainability & Green Audit Reports (Public Domain)",
+  "zero_fabrication_disclaimer": "This document registers publicly acknowledged campus water management systems as contextual engineering infrastructure. Exact underground pipe geometry is NOT inferred or fabricated.",
+  "stormwater_drainage_systems": [
+    {
+      "system_type": "ROADSIDE_SAUCER_DRAIN",
+      "classification": "URBAN_STORMWATER_DRAIN",
+      "description": "Concrete lined roadside saucer drains and catch basins along main campus ring roads and NH-44 frontage, designed to convey sheet runoff to retention swales.",
+      "design_standard": "Indian Road Congress (IRC:SP:42) Guidelines for Urban Highway Drainage",
+      "provenance": "PUBLIC_CAMPUS_DOCUMENTATION"
+    },
+    {
+      "system_type": "RAINWATER_RECHARGE_WELLS",
+      "classification": "STORMWATER_RECHARGE_SYSTEM",
+      "description": "Documented network of rainwater harvesting recharge pits and injection wells located at designated green quadrangles to facilitate groundwater recharge.",
+      "discharge_destination": "Shallow Doaba Alluvial Aquifer (Groundwater Recharge)",
+      "provenance": "PUBLIC_CAMPUS_DOCUMENTATION"
+    },
+    {
+      "system_type": "INTERCONNECTED_RETENTION_SWALES",
+      "classification": "STORMWATER_CONVEYANCE",
+      "description": "Interconnected surface channels and vegetated retention basins conveying excess runoff towards western low-lying buffers near Chaheru stream.",
+      "provenance": "PUBLIC_CAMPUS_DOCUMENTATION"
+    }
+  ],
+  "sanitary_sewage_systems_strict_separation": {
+    "system_type": "SANITARY_SEWER_AND_STP",
+    "classification": "SEPARATE_SANITARY_SEWER_SYSTEM",
+    "warning": "STRICT HYDROMETRIC SEPARATION ENFORCED: Campus wastewater, sewage lines, and Sewage Treatment Plant (STP) pipelines are NOT classified as stormwater drainage. They carry domestic effluent and do not receive storm runoff directly.",
+    "treatment_capacity_documented": "On-campus modular Sewage Treatment Plants (STP) utilizing MBBR/SBR technology for domestic recycling (flushing/horticulture).",
+    "provenance": "PUBLIC_CAMPUS_DOCUMENTATION"
+  }
+}

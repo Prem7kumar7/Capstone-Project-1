@@ -25,10 +25,10 @@ export default function ValidationPage() {
       <div className="border-b border-slate-800 pb-4">
         <h1 className="text-xl font-bold text-white tracking-wide flex items-center gap-2">
           <CheckSquare className="w-6 h-6 text-emerald-400" />
-          Model Scientific Validation & Remote-Sensing Ground Truth
+          Model Scientific Validation &amp; Remote-Sensing Observation Data
         </h1>
         <p className="text-xs text-slate-400 mt-1">
-          Empirical backtesting against ISRO/NRSC NDEM flood reports and Sentinel-1 SAR observations (July 2023 Punjab Floods)
+          Empirical backtesting against ISRO/NRSC NDEM flood reports and Sentinel-1 SAR observations across 3 independent historical events (Aug 2019, Aug 2020, July 2023)
         </p>
       </div>
 
@@ -39,7 +39,7 @@ export default function ValidationPage() {
           <span>Scientific Integrity Guarantee (SIH 2026 Core Principle)</span>
         </div>
         <p className="text-xs text-slate-400 leading-relaxed">
-          In strict accordance with scientific standards, this platform does <strong>NOT fabricate synthetic accuracy numbers</strong>. Validation is conducted against documented remote-sensing observations (ISRO/NRSC Disaster Management Support Programme & Copernicus Sentinel-1 SAR) across Kapurthala, Jalandhar, Phagwara, and the LPU corridor during the catastrophic July 2023 monsoon flood event.
+          In strict accordance with scientific standards, this platform does <strong>NOT fabricate synthetic accuracy numbers</strong>. Validation is conducted against documented satellite-observed flood extents (ISRO/NRSC Disaster Management Support Programme &amp; Copernicus Sentinel-1 SAR) across Kapurthala, Jalandhar, Phagwara, and the LPU corridor across <strong>three independent historical events</strong> (August 2019 Sutlej deluge, August 2020 cloudburst, July 2023 monsoonal flood). Includes real-world failure cases (emergency pumping false alarms and debris-choked culvert misses).
         </p>
       </div>
 
@@ -71,11 +71,11 @@ export default function ValidationPage() {
           </div>
 
           <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-            <span className="text-[10px] font-mono uppercase text-slate-400 block">Ground-Truth Dataset</span>
+            <span className="text-[10px] font-mono uppercase text-slate-400 block">Satellite Dataset</span>
             <span className="text-2xl font-black text-white font-mono">
               {validationData.total_events_recorded} Points
             </span>
-            <span className="text-[10px] text-emerald-400 block mt-1 font-mono">ISRO NRSC / SAR C-Band</span>
+            <span className="text-[10px] text-emerald-400 block mt-1 font-mono">3 Historical Events (2019–2023)</span>
           </div>
         </div>
       )}
@@ -115,18 +115,18 @@ export default function ValidationPage() {
         </div>
       )}
 
-      {/* Ground-Truth Points Table */}
+      {/* Satellite-Observed Points Table */}
       {events.length > 0 && (
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">
           <div className="flex items-center justify-between border-b border-slate-800 pb-2">
             <div className="flex items-center gap-2">
               <Satellite className="w-4 h-4 text-sky-400" />
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-200">
-                Authoritative Validation Observations (July 2023 Punjab Event)
+                Satellite-Observed Flood Extents (August 2019, August 2020, July 2023 Events)
               </h3>
             </div>
             <span className="text-[10px] font-mono text-emerald-400">
-              Verified Remote Sensing Records
+              Sentinel-1 SAR C-Band &amp; NRSC NDEM
             </span>
           </div>
 

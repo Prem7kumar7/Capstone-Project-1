@@ -1,0 +1,141 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "LPU West Overland Flow Path (to Chaheru Stream)",
+        "classification": "DERIVED_FLOW_PATH",
+        "region_id": "lpu_main_campus",
+        "derivation_method": "Copernicus DEM 30m D8 steepest descent flow vector",
+        "receiving_waterbody": "Chaheru Natural Stream / Nullah",
+        "provenance": "DERIVED",
+        "status": "DERIVED_MODEL_LAYER"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            75.706,
+            31.255
+          ],
+          [
+            75.701,
+            31.254
+          ],
+          [
+            75.698,
+            31.253
+          ],
+          [
+            75.695,
+            31.252
+          ],
+          [
+            75.692,
+            31.251
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Chaheru Agricultural Depression Flow Vector",
+        "classification": "DERIVED_FLOW_PATH",
+        "region_id": "chaheru",
+        "derivation_method": "Copernicus DEM 30m D8 steepest descent flow vector",
+        "receiving_waterbody": "Chaheru Natural Stream",
+        "provenance": "DERIVED",
+        "status": "DERIVED_MODEL_LAYER"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            75.698,
+            31.268
+          ],
+          [
+            75.695,
+            31.264
+          ],
+          [
+            75.693,
+            31.26
+          ],
+          [
+            75.691,
+            31.256
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Phagwara Urban Runoff Conveyance Corridor",
+        "classification": "DERIVED_FLOW_PATH",
+        "region_id": "phagwara_urban",
+        "derivation_method": "Copernicus DEM 30m D8 steepest descent flow vector",
+        "receiving_waterbody": "Phagwara Choe Outfall",
+        "provenance": "DERIVED",
+        "status": "DERIVED_MODEL_LAYER"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            75.782,
+            31.238
+          ],
+          [
+            75.774,
+            31.231
+          ],
+          [
+            75.766,
+            31.224
+          ],
+          [
+            75.758,
+            31.217
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Jalandhar South-West Overland Flow Vector",
+        "classification": "DERIVED_FLOW_PATH",
+        "region_id": "jalandhar_metro",
+        "derivation_method": "Copernicus DEM 30m D8 steepest descent flow vector",
+        "receiving_waterbody": "Kala Sanghian Drain",
+        "provenance": "DERIVED",
+        "status": "DERIVED_MODEL_LAYER"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            75.588,
+            31.342
+          ],
+          [
+            75.572,
+            31.331
+          ],
+          [
+            75.556,
+            31.319
+          ],
+          [
+            75.539,
+            31.305
+          ]
+        ]
+      }
+    }
+  ]
+}

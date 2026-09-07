@@ -43,7 +43,7 @@ export const RainfallChart: React.FC<Props> = ({ forecast }) => {
       <div className="flex items-center justify-between border-b border-slate-800 pb-2 mb-2">
         <div>
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-200">
-            0–6 Hour Rainfall Nowcast & Probability
+            0–6 Hour Precipitation Forecast &amp; Rain Probability (NWP Baseline)
           </h3>
           <p className="text-[11px] text-slate-400">Open-Meteo Global NWP Model (ECMWF/GFS blend)</p>
         </div>

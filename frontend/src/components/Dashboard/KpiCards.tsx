@@ -124,33 +124,33 @@ export const KpiCards: React.FC<Props> = ({ weather, floodRun }) => {
           <div className="text-xs font-bold font-mono text-white truncate">
             {earliestTime}
           </div>
-          <div className="text-[10px] text-slate-400 mt-1">
-            ESTIMATED lead window
+          <div className="text-[10px] text-amber-400/90 font-mono mt-1">
+            [MODEL-DERIVED ESTIMATE]
           </div>
         </div>
         <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between">
-          <span className="text-[10px] text-slate-500">SCS accumulation</span>
-          <ProvenanceBadge provenance="DERIVED" size="sm" />
+          <span className="text-[10px] text-slate-500">Not confirmed time</span>
+          <ProvenanceBadge provenance="ESTIMATED" size="sm" />
         </div>
       </div>
 
       {/* 6. Active High Risk Zones */}
       <div className="bg-slate-900 border border-slate-800 rounded-lg p-3 flex flex-col justify-between">
         <div className="flex items-center justify-between text-slate-400 mb-1">
-          <span className="text-[11px] font-semibold uppercase tracking-wider">Active Hotspots</span>
-          <ShieldAlert className="w-4 h-4 text-red-400" />
+          <span className="text-[11px] font-semibold uppercase tracking-wider">Candidate Hotspots</span>
+          <ShieldAlert className="w-4 h-4 text-rose-400" />
         </div>
         <div className="my-1">
           <div className="text-2xl font-black font-mono text-white">
-            {hotspotsCount} <span className="text-xs font-normal text-slate-400 font-sans">monitored</span>
+            {hotspotsCount}
           </div>
           <div className="text-[11px] text-slate-400 mt-0.5">
-            NH-44 & LPU Basin
+            Model-derived proxies
           </div>
         </div>
         <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between">
-          <span className="text-[10px] text-slate-500">Verified nodes</span>
-          <ProvenanceBadge provenance="HISTORICAL" size="sm" />
+          <span className="text-[10px] text-slate-500">No IoT telemetry</span>
+          <ProvenanceBadge provenance="DERIVED" size="sm" />
         </div>
       </div>
     </div>

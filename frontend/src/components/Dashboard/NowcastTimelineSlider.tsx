@@ -29,7 +29,7 @@ export function NowcastTimelineSlider({
             0–6 Hour Nowcast Horizon Timeline
           </span>
           <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-800">
-            Trend Extrapolation + Advection
+            SHORT-TERM NOWCAST BASELINE &bull; NWP Trend Extrapolation
           </span>
         </div>
 

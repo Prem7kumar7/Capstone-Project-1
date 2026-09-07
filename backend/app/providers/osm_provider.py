@@ -10,6 +10,7 @@ class OSMProvider(BaseProvider):
         self.waterways_file = settings.STUDY_AREAS_DIR / "regional_waterways.geojson"
         self.natural_waterways_file = settings.STUDY_AREAS_DIR / "natural_waterways.geojson"
         self.urban_drains_file = settings.STUDY_AREAS_DIR / "urban_stormwater_drains.geojson"
+        self.derived_flow_paths_file = settings.STUDY_AREAS_DIR / "derived_flow_paths.geojson"
         self.infra_file = settings.STUDY_AREAS_DIR / "critical_infrastructure.geojson"
 
     async def check_health(self) -> Dict[str, Any]:
@@ -26,7 +27,7 @@ class OSMProvider(BaseProvider):
                 "verified_layers": [
                     "lpu_osm_boundary", "chaheru_osm_boundary", "phagwara_osm_boundary",
                     "jalandhar_osm_boundary", "nh44_osm_trunk", "natural_waterways",
-                    "urban_stormwater_drains", "critical_infrastructure"
+                    "urban_stormwater_drains", "derived_flow_paths", "critical_infrastructure"
                 ],
                 "drainage_data_status": "SURFACE_AND_NATURAL_CHOS_AVAILABLE",
                 "infrastructure_status": "CIVIC_ASSETS_VERIFIED"
@@ -53,6 +54,14 @@ class OSMProvider(BaseProvider):
     def get_urban_drainage(self) -> Dict[str, Any]:
         """Returns engineered municipal open stormwater drains (Kala Sanghian, Phagwara Choe, NH-44 saucer drains)."""
         return load_geojson_safe(self.urban_drains_file)
+
+    def get_derived_flow_paths(self, region_id: str = None) -> Dict[str, Any]:
+        """Returns DEM-derived overland surface flow paths (Copernicus DEM 30m D8 steepest descent)."""
+        data = load_geojson_safe(self.derived_flow_paths_file)
+        if not region_id or "features" not in data:
+            return data
+        filtered = [f for f in data.get("features", []) if f.get("properties", {}).get("region_id") == region_id]
+        return {"type": "FeatureCollection", "features": filtered}
 
     def get_waterways(self) -> Dict[str, Any]:
         """Returns combined regional waterways for backward compatibility."""

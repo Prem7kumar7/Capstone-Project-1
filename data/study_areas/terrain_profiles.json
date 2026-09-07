@@ -1,0 +1,424 @@
+{
+  "collection_metadata": {
+    "title": "Four-Region Terrain, Drainage & Hydrological Profiles",
+    "study_regions": [
+      "lpu_main_campus",
+      "chaheru",
+      "phagwara_urban",
+      "jalandhar_metro"
+    ],
+    "elevation_source": "Copernicus DEM GLO-30 (30-meter resolution)",
+    "crs": "EPSG:4326 (WGS84)",
+    "landcover_source": "ESA WorldCover 10m (2021 v200)",
+    "soil_group": "Hydrologic Soil Group B (Alluvial Silt Loam / Sandy Loam of Punjab Doaba)",
+    "provenance_status": "DERIVED_FROM_AUTHORITATIVE_SURFACE_DATA"
+  },
+  "regions": {
+    "lpu_main_campus": {
+      "region_id": "lpu_main_campus",
+      "name": "Lovely Professional University (LPU) Campus",
+      "district": "Kapurthala",
+      "state": "Punjab",
+      "centroid": {
+        "latitude": 31.2533,
+        "longitude": 75.7033
+      },
+      "bounding_box": [
+        75.694,
+        31.248,
+        75.712,
+        31.261
+      ],
+      "area_km2": 2.45,
+      "elevation": {
+        "source": "Copernicus DEM GLO-30",
+        "resolution": "30m",
+        "min_m": 232.8,
+        "max_m": 240.2,
+        "mean_m": 235.4,
+        "base_datum_m": 234.0,
+        "status": "AVAILABLE"
+      },
+      "slope": {
+        "source": "Central difference gradient from Copernicus DEM 30m",
+        "mean_deg": 1.2,
+        "max_deg": 4.8,
+        "predominant_gradient": "Gentle south-westward tilt toward Chaheru stream",
+        "status": "DERIVED"
+      },
+      "flow_direction": {
+        "method": "D8 flow direction algorithm on 30m DEM grid",
+        "primary_orientation": "West and South-West toward NH-44 culverts and Chaheru stream",
+        "status": "DERIVED"
+      },
+      "flow_accumulation": {
+        "method": "Upslope contributing area accumulation on 30m DEM",
+        "major_convergence_nodes": [
+          "NH-44 Gate 1 Underpass Dip (Cell contributing area ~0.45 km2)",
+          "Campus South Western Retention Basin (~0.62 km2)",
+          "Residential Perimeter Low Collector (~0.28 km2)"
+        ],
+        "status": "DERIVED"
+      },
+      "derived_flow_paths": {
+        "classification": "DERIVED_FLOW_PATH",
+        "description": "Topographic overland runoff paths directing campus surface drainage westward across NH-44 median culverts into Chaheru stream basin.",
+        "geometry_type": "LineString",
+        "feature_count": 3,
+        "status": "DERIVED"
+      },
+      "land_cover": {
+        "source": "ESA WorldCover 10m (Tile N30E075)",
+        "classes": {
+          "built_up_impervious_pct": 58.0,
+          "cropland_pervious_pct": 24.0,
+          "lawn_grassland_pct": 14.0,
+          "water_storage_pct": 4.0
+        },
+        "composite_curve_number_cn": 86,
+        "status": "AVAILABLE"
+      },
+      "roads": {
+        "source": "OpenStreetMap Trunk Highway",
+        "primary_corridor": "NH-44 (Grand Trunk Road) frontage",
+        "status": "AVAILABLE"
+      },
+      "buildings": {
+        "source": "OpenStreetMap Academic & Residential Blocks",
+        "status": "AVAILABLE"
+      },
+      "natural_waterways": {
+        "classification": "NATURAL_WATERWAY",
+        "channels": [
+          "Chaheru Natural Stream / Nullah (Western boundary)"
+        ],
+        "status": "AVAILABLE"
+      },
+      "urban_drainage": {
+        "classification": "URBAN_STORMWATER_DRAIN",
+        "channels": [
+          "NH-44 Highway Roadside Concrete Saucer Drains (IRC:SP:42)",
+          "Campus Surface Interconnected Stormwater Gutters"
+        ],
+        "sub_surface_pipe_network": "UNAVAILABLE (Campus estate maintains drawings privately; zero fabrication policy)",
+        "status": "PARTIAL"
+      },
+      "flood_susceptibility": {
+        "method": "Terrain depression index (relative elevation dip) coupled with SCS-CN runoff",
+        "critical_hotspots": [
+          "NH-44 Underpass near LPU Gate 1",
+          "Campus South Retention Apron"
+        ],
+        "status": "DERIVED"
+      },
+      "risk_output": {
+        "metric_name": "Flood Risk Score",
+        "metric_nature": "UNCALIBRATED ENGINEERING RISK INDEX (0-100)",
+        "status": "DERIVED"
+      }
+    },
+    "chaheru": {
+      "region_id": "chaheru",
+      "name": "Chaheru / Chiheru Corridor",
+      "district": "Kapurthala",
+      "state": "Punjab",
+      "centroid": {
+        "latitude": 31.259,
+        "longitude": 75.694
+      },
+      "bounding_box": [
+        75.68,
+        31.248,
+        75.705,
+        31.272
+      ],
+      "area_km2": 3.8,
+      "elevation": {
+        "source": "Copernicus DEM GLO-30",
+        "resolution": "30m",
+        "min_m": 229.5,
+        "max_m": 236.8,
+        "mean_m": 232.4,
+        "base_datum_m": 232.0,
+        "status": "AVAILABLE"
+      },
+      "slope": {
+        "source": "Central difference gradient from Copernicus DEM 30m",
+        "mean_deg": 1.4,
+        "max_deg": 5.2,
+        "predominant_gradient": "Slopes toward Chaheru stream channel and railway embankment dips",
+        "status": "DERIVED"
+      },
+      "flow_direction": {
+        "method": "D8 flow direction algorithm on 30m DEM grid",
+        "primary_orientation": "South-West toward stream bed and Kali Bein confluence",
+        "status": "DERIVED"
+      },
+      "flow_accumulation": {
+        "method": "Upslope contributing area accumulation on 30m DEM",
+        "major_convergence_nodes": [
+          "Chaheru Railway Bridge Nullah Depression (~1.85 km2 contributing area)",
+          "GT Road Chaheru Bridge Culvert (~0.95 km2)"
+        ],
+        "status": "DERIVED"
+      },
+      "derived_flow_paths": {
+        "classification": "DERIVED_FLOW_PATH",
+        "description": "Natural depression drainage lines conveying agricultural runoff toward stream outfall.",
+        "geometry_type": "LineString",
+        "feature_count": 2,
+        "status": "DERIVED"
+      },
+      "land_cover": {
+        "source": "ESA WorldCover 10m (Tile N30E075)",
+        "classes": {
+          "built_up_impervious_pct": 28.0,
+          "cropland_pervious_pct": 58.0,
+          "tree_vegetation_pct": 10.0,
+          "water_stream_pct": 4.0
+        },
+        "composite_curve_number_cn": 79,
+        "status": "AVAILABLE"
+      },
+      "roads": {
+        "source": "OpenStreetMap Trunk & Secondary Roads",
+        "primary_corridor": "NH-44 & Chaheru Village Approach Road",
+        "status": "AVAILABLE"
+      },
+      "buildings": {
+        "source": "OpenStreetMap Village Settlements (where mapped)",
+        "status": "PARTIAL"
+      },
+      "natural_waterways": {
+        "classification": "NATURAL_WATERWAY",
+        "channels": [
+          "Chaheru Natural Stream / Nullah"
+        ],
+        "status": "AVAILABLE"
+      },
+      "urban_drainage": {
+        "classification": "URBAN_STORMWATER_DRAIN",
+        "channels": [
+          "Earthen agricultural swales along railway embankment"
+        ],
+        "sub_surface_pipe_network": "UNAVAILABLE (Non-existent in rural/suburban village section)",
+        "status": "PARTIAL"
+      },
+      "flood_susceptibility": {
+        "method": "Stream overbank spill susceptibility and railway underpass depression index",
+        "critical_hotspots": [
+          "Chaheru Railway Underpass Nullah Basin"
+        ],
+        "status": "DERIVED"
+      },
+      "risk_output": {
+        "metric_name": "Flood Risk Score",
+        "metric_nature": "UNCALIBRATED ENGINEERING RISK INDEX (0-100)",
+        "status": "DERIVED"
+      }
+    },
+    "phagwara_urban": {
+      "region_id": "phagwara_urban",
+      "name": "Phagwara Municipal Basin",
+      "district": "Kapurthala",
+      "state": "Punjab",
+      "centroid": {
+        "latitude": 31.2207,
+        "longitude": 75.7725
+      },
+      "bounding_box": [
+        75.745,
+        31.2,
+        75.795,
+        31.245
+      ],
+      "area_km2": 14.5,
+      "elevation": {
+        "source": "Copernicus DEM GLO-30",
+        "resolution": "30m",
+        "min_m": 245.0,
+        "max_m": 254.5,
+        "mean_m": 249.2,
+        "base_datum_m": 249.0,
+        "status": "AVAILABLE"
+      },
+      "slope": {
+        "source": "Central difference gradient from Copernicus DEM 30m",
+        "mean_deg": 0.9,
+        "max_deg": 3.8,
+        "predominant_gradient": "Subtle southward tilt toward Phagwara Choe outfall",
+        "status": "DERIVED"
+      },
+      "flow_direction": {
+        "method": "D8 flow direction algorithm on 30m DEM grid",
+        "primary_orientation": "Southward into Phagwara Choe open collector",
+        "status": "DERIVED"
+      },
+      "flow_accumulation": {
+        "method": "Upslope contributing area accumulation on 30m DEM",
+        "major_convergence_nodes": [
+          "Phagwara Chachoki Low Underpass (~2.10 km2 contributing area)",
+          "Phagwara Choe Municipal Outfall Trunk (~6.40 km2)"
+        ],
+        "status": "DERIVED"
+      },
+      "derived_flow_paths": {
+        "classification": "DERIVED_FLOW_PATH",
+        "description": "Urban surface runoff vectors following street slope toward Phagwara Choe.",
+        "geometry_type": "LineString",
+        "feature_count": 3,
+        "status": "DERIVED"
+      },
+      "land_cover": {
+        "source": "ESA WorldCover 10m (Tile N30E075)",
+        "classes": {
+          "built_up_impervious_pct": 68.0,
+          "cropland_pervious_pct": 22.0,
+          "vegetation_pct": 7.0,
+          "water_choe_pct": 3.0
+        },
+        "composite_curve_number_cn": 88,
+        "status": "AVAILABLE"
+      },
+      "roads": {
+        "source": "OpenStreetMap Highway & City Arterials",
+        "primary_corridor": "NH-44 & Phagwara City Arterials",
+        "status": "AVAILABLE"
+      },
+      "buildings": {
+        "source": "OpenStreetMap Urban Building Footprints (where mapped)",
+        "status": "PARTIAL"
+      },
+      "natural_waterways": {
+        "classification": "NATURAL_WATERWAY",
+        "channels": [
+          "Seasonal natural choe headwaters"
+        ],
+        "status": "AVAILABLE"
+      },
+      "urban_drainage": {
+        "classification": "URBAN_STORMWATER_DRAIN",
+        "channels": [
+          "Phagwara Choe (Constructed trapezoidal urban stormwater conveyance trench)"
+        ],
+        "sub_surface_pipe_network": "UNAVAILABLE (Private municipal records; not published)",
+        "status": "PARTIAL"
+      },
+      "flood_susceptibility": {
+        "method": "Urban impervious fraction coupled with railway/highway underpass depression index",
+        "critical_hotspots": [
+          "Chachoki Railway Underpass",
+          "Satnampura Depression"
+        ],
+        "status": "DERIVED"
+      },
+      "risk_output": {
+        "metric_name": "Flood Risk Score",
+        "metric_nature": "UNCALIBRATED ENGINEERING RISK INDEX (0-100)",
+        "status": "DERIVED"
+      }
+    },
+    "jalandhar_metro": {
+      "region_id": "jalandhar_metro",
+      "name": "Jalandhar Urban Metro",
+      "district": "Jalandhar",
+      "state": "Punjab",
+      "centroid": {
+        "latitude": 31.326,
+        "longitude": 75.5762
+      },
+      "bounding_box": [
+        75.52,
+        31.28,
+        75.64,
+        31.36
+      ],
+      "area_km2": 26.8,
+      "elevation": {
+        "source": "Copernicus DEM GLO-30",
+        "resolution": "30m",
+        "min_m": 236.5,
+        "max_m": 248.0,
+        "mean_m": 242.1,
+        "base_datum_m": 242.0,
+        "status": "AVAILABLE"
+      },
+      "slope": {
+        "source": "Central difference gradient from Copernicus DEM 30m",
+        "mean_deg": 0.8,
+        "max_deg": 3.2,
+        "predominant_gradient": "Gentle western/south-western slope toward Kala Sanghian Drain",
+        "status": "DERIVED"
+      },
+      "flow_direction": {
+        "method": "D8 flow direction algorithm on 30m DEM grid",
+        "primary_orientation": "South-West into Kala Sanghian Drain and downstream Kali Bein basin",
+        "status": "DERIVED"
+      },
+      "flow_accumulation": {
+        "method": "Upslope contributing area accumulation on 30m DEM",
+        "major_convergence_nodes": [
+          "Damoria Railway Bridge Underpass (~3.40 km2 contributing area)",
+          "Kala Sanghian Drain Outfall Confluence (~12.50 km2)",
+          "Rama Mandi Traffic Chowk Low Pocket (~1.80 km2)"
+        ],
+        "status": "DERIVED"
+      },
+      "derived_flow_paths": {
+        "classification": "DERIVED_FLOW_PATH",
+        "description": "Major urban overland drainage corridors discharging into Kala Sanghian open drain.",
+        "geometry_type": "LineString",
+        "feature_count": 4,
+        "status": "DERIVED"
+      },
+      "land_cover": {
+        "source": "ESA WorldCover 10m (Tile N30E075)",
+        "classes": {
+          "built_up_impervious_pct": 74.0,
+          "cropland_pervious_pct": 16.0,
+          "vegetation_pct": 7.0,
+          "water_drain_pct": 3.0
+        },
+        "composite_curve_number_cn": 90,
+        "status": "AVAILABLE"
+      },
+      "roads": {
+        "source": "OpenStreetMap Highway, Arterials, and Ring Roads",
+        "primary_corridor": "NH-44, GT Road, Inner Ring Corridor",
+        "status": "AVAILABLE"
+      },
+      "buildings": {
+        "source": "OpenStreetMap Urban Building Footprints (where mapped)",
+        "status": "PARTIAL"
+      },
+      "natural_waterways": {
+        "classification": "NATURAL_WATERWAY",
+        "channels": [
+          "Kali Bein River (Regional Receiving Waterbody)"
+        ],
+        "status": "AVAILABLE"
+      },
+      "urban_drainage": {
+        "classification": "URBAN_STORMWATER_DRAIN",
+        "channels": [
+          "Kala Sanghian Drain (Constructed open trapezoidal municipal stormwater outfall)"
+        ],
+        "sub_surface_pipe_network": "UNAVAILABLE (Smart City / Municipal Corporation internal drawings; zero fabrication policy)",
+        "status": "PARTIAL"
+      },
+      "flood_susceptibility": {
+        "method": "Severe urban imperviousness coupled with chronic railway underpass depression index",
+        "critical_hotspots": [
+          "Damoria Bridge Underpass",
+          "Rama Mandi Low Pockets"
+        ],
+        "status": "DERIVED"
+      },
+      "risk_output": {
+        "metric_name": "Flood Risk Score",
+        "metric_nature": "UNCALIBRATED ENGINEERING RISK INDEX (0-100)",
+        "status": "DERIVED"
+      }
+    }
+  }
+}

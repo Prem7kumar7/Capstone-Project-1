@@ -561,28 +561,53 @@ export default function LeafletMapInner({
         </div>
 
         {/* Map Legend (Bottom Left) */}
-        <div className="absolute bottom-4 left-4 z-[1000] bg-slate-900/95 backdrop-blur border border-slate-800 rounded-lg p-3 shadow-xl text-[11px] font-mono space-y-1">
+        <div className="absolute bottom-4 left-4 z-[1000] bg-slate-900/95 backdrop-blur border border-slate-800 rounded-lg p-3 shadow-xl text-[11px] font-mono space-y-1.5 max-w-[260px]">
           <div className="font-bold text-slate-200 font-sans text-xs border-b border-slate-800 pb-1 mb-1">
-            Flood Risk Score Scale
+            Risk Index &amp; Drainage Legend
           </div>
-          <div className="flex items-center gap-2 text-slate-300">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-            <span>0 &ndash; 20: Very Low / Low</span>
+          <div className="text-[10px] text-amber-300 font-sans font-semibold">
+            [UNCALIBRATED ENGINEERING RISK INDEX]
           </div>
-          <div className="flex items-center gap-2 text-slate-300">
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-            <span>40 &ndash; 60: Moderate Risk</span>
+          <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-slate-300 text-[10px]">
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span>
+              <span>0&ndash;40: Low</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0"></span>
+              <span>40&ndash;60: Moderate</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-orange-500 shrink-0"></span>
+              <span>60&ndash;80: High</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 shrink-0"></span>
+              <span>80&ndash;100: Extreme</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2 text-slate-300">
-            <span className="w-2.5 h-2.5 rounded-full bg-orange-500"></span>
-            <span>60 &ndash; 80: High Hazard</span>
+
+          <div className="border-t border-slate-800 pt-1.5 space-y-1 text-[10px] text-slate-300">
+            <div className="flex items-center gap-1.5">
+              <span className="w-3.5 h-0.5 bg-cyan-400 shrink-0"></span>
+              <span className="text-cyan-300">🌊 Natural Waterway</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-3.5 border-t border-dashed border-amber-400 shrink-0"></span>
+              <span className="text-amber-300">⚡ Urban Storm Drain</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-3.5 border-t border-dotted border-blue-400 shrink-0"></span>
+              <span className="text-blue-300">〰️ Derived Flow Path</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full border border-white bg-amber-400 shrink-0"></span>
+              <span className="text-slate-300">Candidate Node (No Sensor)</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2 text-slate-300">
-            <span className="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
-            <span>80 &ndash; 100: Extreme Inundation</span>
-          </div>
-          <div className="text-[10px] text-slate-400 font-sans pt-1 border-t border-slate-800/80">
-            Click anywhere on map to inspect point
+
+          <div className="text-[9px] text-slate-400 font-sans pt-1 border-t border-slate-800/80">
+            Click anywhere on map to inspect terrain &amp; SCS-CN
           </div>
         </div>
       </div>
