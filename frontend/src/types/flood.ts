@@ -140,3 +140,43 @@ export interface PointInspectionResult {
   confidence: string;
   updated_at_ist: string;
 }
+
+export interface StudyRegionItem {
+  id: string;
+  name: string;
+  district: string;
+  centroid: { lat: number; lon: number };
+  elevation_base_m: number;
+  status: string;
+}
+
+export interface StudyAreaInfo {
+  study_area_id: string;
+  name: string;
+  state: string;
+  district: string;
+  centroid: { lat: number; lon: number };
+  default_zoom: number;
+  elevation_base_m: number;
+  available_areas: StudyRegionItem[];
+}
+
+export interface NowcastHorizonPoint {
+  lead_time_hours: number;
+  label: string;
+  projected_rainfall_mm_h: number;
+  confidence_score: number;
+  max_flood_risk_score: number;
+  overall_severity: string;
+  highest_estimated_depth_bracket: string;
+  affected_hotspots_count: number;
+  provenance: string;
+}
+
+export interface NowcastTimelineResponse {
+  study_area_id: string;
+  study_area_name: string;
+  base_rainfall_mm_h: number;
+  forecast_horizons: NowcastHorizonPoint[];
+}
+

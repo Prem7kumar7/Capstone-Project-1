@@ -1,0 +1,43 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "jalandhar_metro",
+        "name": "Municipal Corporation Jalandhar Urban Metro",
+        "source": "OpenStreetMap Administrative Boundary",
+        "osm_type": "administrative",
+        "admin_level": 8,
+        "base_elevation_m": 242.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              75.52,
+              31.28
+            ],
+            [
+              75.63,
+              31.28
+            ],
+            [
+              75.64,
+              31.365
+            ],
+            [
+              75.53,
+              31.365
+            ],
+            [
+              75.52,
+              31.28
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

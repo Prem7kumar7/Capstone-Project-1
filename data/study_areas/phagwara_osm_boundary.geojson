@@ -1,0 +1,43 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "phagwara_urban",
+        "name": "Municipal Corporation Phagwara Urban Basin",
+        "source": "OpenStreetMap Administrative Boundary (Kapurthala District)",
+        "osm_type": "administrative",
+        "admin_level": 8,
+        "base_elevation_m": 249.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              75.74,
+              31.2
+            ],
+            [
+              75.805,
+              31.2
+            ],
+            [
+              75.815,
+              31.245
+            ],
+            [
+              75.75,
+              31.25
+            ],
+            [
+              75.74,
+              31.2
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

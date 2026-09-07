@@ -1,0 +1,129 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Chaheru Stream / Nullah",
+        "type": "stream",
+        "waterway": "drain",
+        "description": "Natural drain passing beneath NH-44 near Chaheru railway bridge, receiving campus western runoff.",
+        "source": "OpenStreetMap Waterway Line"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            75.688,
+            31.265
+          ],
+          [
+            75.692,
+            31.258
+          ],
+          [
+            75.695,
+            31.251
+          ],
+          [
+            75.697,
+            31.244
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Phagwara Choe (Stormwater Outfall Channel)",
+        "type": "drain",
+        "waterway": "drain",
+        "description": "Primary stormwater conveyance channel carrying municipal runoff from Phagwara urban basin.",
+        "source": "Punjab Water Resources Department / OSM"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            75.78,
+            31.24
+          ],
+          [
+            75.765,
+            31.228
+          ],
+          [
+            75.75,
+            31.215
+          ],
+          [
+            75.735,
+            31.2
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kala Sanghian Drain (Jalandhar Outfall)",
+        "type": "canal",
+        "waterway": "drain",
+        "description": "Major urban outfall drain conveying surface runoff from Jalandhar metro to the Kali Bein river.",
+        "source": "Punjab Water Resources Department / OSM"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            75.59,
+            31.35
+          ],
+          [
+            75.565,
+            31.325
+          ],
+          [
+            75.535,
+            31.3
+          ],
+          [
+            75.505,
+            31.275
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kali Bein River (Regional Receiving Basin)",
+        "type": "river",
+        "waterway": "river",
+        "description": "Sacred regional receiving river of the Bist-Doab tract receiving tributary outflows.",
+        "source": "OpenStreetMap River Polyline"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            75.5,
+            31.27
+          ],
+          [
+            75.485,
+            31.24
+          ],
+          [
+            75.47,
+            31.2
+          ],
+          [
+            75.45,
+            31.15
+          ]
+        ]
+      }
+    }
+  ]
+}

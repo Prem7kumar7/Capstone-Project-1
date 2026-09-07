@@ -8,6 +8,9 @@ interface Props {
   hotspots: FloodHotspot[];
   boundaryGeoJson?: any;
   roadsGeoJson?: any;
+  waterwaysGeoJson?: any;
+  infrastructureGeoJson?: any;
+  regionId?: string;
 }
 
 const LeafletMapInner = dynamic(() => import("./LeafletMapInner"), {

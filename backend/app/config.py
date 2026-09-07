@@ -19,12 +19,59 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'flood_nowcasting.db'}")
     
-    # Geospatial Default Configuration
+    # Geospatial Multi-Region Configuration
     DEFAULT_STUDY_AREA_ID: str = "lpu_main_campus"
     DEFAULT_STUDY_AREA_NAME: str = "Lovely Professional University & NH-44 Corridor, Phagwara"
     DEFAULT_LAT: float = 31.2533
     DEFAULT_LON: float = 75.7033
     DEFAULT_RADIUS_KM: float = 3.5
+
+    STUDY_REGIONS: dict = {
+        "lpu_main_campus": {
+            "id": "lpu_main_campus",
+            "name": "Lovely Professional University (LPU) Campus",
+            "state": "Punjab",
+            "district": "Kapurthala",
+            "centroid": {"lat": 31.2533, "lon": 75.7033},
+            "default_zoom": 16.2,
+            "elevation_base_m": 234.0,
+            "boundary_file": "lpu_osm_boundary.geojson",
+            "roads_file": "nh44_osm_trunk.geojson"
+        },
+        "chaheru": {
+            "id": "chaheru",
+            "name": "Chaheru / Chiheru Corridor",
+            "state": "Punjab",
+            "district": "Kapurthala",
+            "centroid": {"lat": 31.2590, "lon": 75.6940},
+            "default_zoom": 15.5,
+            "elevation_base_m": 232.0,
+            "boundary_file": "chaheru_osm_boundary.geojson",
+            "roads_file": "nh44_osm_trunk.geojson"
+        },
+        "phagwara_urban": {
+            "id": "phagwara_urban",
+            "name": "Phagwara Municipal Basin",
+            "state": "Punjab",
+            "district": "Kapurthala",
+            "centroid": {"lat": 31.2207, "lon": 75.7725},
+            "default_zoom": 14.5,
+            "elevation_base_m": 249.0,
+            "boundary_file": "phagwara_osm_boundary.geojson",
+            "roads_file": "nh44_osm_trunk.geojson"
+        },
+        "jalandhar_metro": {
+            "id": "jalandhar_metro",
+            "name": "Jalandhar Urban Metro",
+            "state": "Punjab",
+            "district": "Jalandhar",
+            "centroid": {"lat": 31.3260, "lon": 75.5762},
+            "default_zoom": 13.5,
+            "elevation_base_m": 242.0,
+            "boundary_file": "jalandhar_osm_boundary.geojson",
+            "roads_file": "nh44_osm_trunk.geojson"
+        }
+    }
     
     # External APIs
     OPEN_METEO_FORECAST_URL: str = "https://api.open-meteo.com/v1/forecast"

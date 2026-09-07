@@ -21,9 +21,22 @@ export async function fetchWeatherForecast(): Promise<WeatherForecast> {
   return res.json();
 }
 
-export async function fetchCurrentFloodRisk(): Promise<FloodPredictionRun> {
-  const res = await fetch(`${API_BASE}/flood/current-risk`, { cache: "no-store" });
+export async function fetchStudyAreaInfo(regionId?: string): Promise<any> {
+  const url = regionId ? `${API_BASE}/study-area?region_id=${regionId}` : `${API_BASE}/study-area`;
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Study area fetch failed: ${res.statusText}`);
+  return res.json();
+}
+
+export async function fetchCurrentFloodRisk(regionId: string = "lpu_main_campus", leadTimeHours: number = 0.0): Promise<FloodPredictionRun> {
+  const res = await fetch(`${API_BASE}/flood/current-risk?study_area_id=${regionId}&lead_time_hours=${leadTimeHours}`, { cache: "no-store" });
   if (!res.ok) throw new Error(`Flood risk fetch failed: ${res.statusText}`);
+  return res.json();
+}
+
+export async function fetchNowcastTimeline(regionId: string = "lpu_main_campus"): Promise<any> {
+  const res = await fetch(`${API_BASE}/nowcasting/timeline?study_area_id=${regionId}`, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Nowcast timeline fetch failed: ${res.statusText}`);
   return res.json();
 }
 
@@ -69,15 +82,28 @@ export async function fetchSystemHealth(): Promise<SystemHealth> {
   return res.json();
 }
 
-export async function fetchBoundaryGeoJson(): Promise<any> {
-  const res = await fetch(`${API_BASE}/study-area/boundary`, { cache: "no-store" });
+export async function fetchBoundaryGeoJson(regionId: string = "lpu_main_campus"): Promise<any> {
+  const res = await fetch(`${API_BASE}/study-area/boundary?region_id=${regionId}`, { cache: "no-store" });
   if (!res.ok) throw new Error(`Boundary fetch failed: ${res.statusText}`);
   return res.json();
 }
 
-export async function fetchRoadsGeoJson(): Promise<any> {
-  const res = await fetch(`${API_BASE}/study-area/roads`, { cache: "no-store" });
+export async function fetchRoadsGeoJson(regionId: string = "lpu_main_campus"): Promise<any> {
+  const res = await fetch(`${API_BASE}/study-area/roads?region_id=${regionId}`, { cache: "no-store" });
   if (!res.ok) throw new Error(`Roads fetch failed: ${res.statusText}`);
+  return res.json();
+}
+
+export async function fetchWaterwaysGeoJson(): Promise<any> {
+  const res = await fetch(`${API_BASE}/study-area/waterways`, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Waterways fetch failed: ${res.statusText}`);
+  return res.json();
+}
+
+export async function fetchInfrastructureGeoJson(regionId?: string): Promise<any> {
+  const url = regionId ? `${API_BASE}/study-area/infrastructure?region_id=${regionId}` : `${API_BASE}/study-area/infrastructure`;
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Infrastructure fetch failed: ${res.statusText}`);
   return res.json();
 }
 

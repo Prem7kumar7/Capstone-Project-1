@@ -12,15 +12,25 @@ from backend.app.risk.time_to_flood import calculate_estimated_time_to_flood
 from backend.app.utils.geo import utc_to_ist_str
 from datetime import datetime, timezone
 
+from fastapi import APIRouter, Query
+
 router = APIRouter(prefix="/flood", tags=["Flood Risk & Nowcasting"])
 
 @router.get("/current-risk")
-async def get_current_flood_risk():
+async def get_current_flood_risk(
+    study_area_id: str = Query("lpu_main_campus"),
+    lead_time_hours: float = Query(0.0)
+):
     """
-    Executes the live nowcasting pipeline using real-time weather and DEM inputs.
+    Executes the live nowcasting pipeline using real-time weather and DEM inputs
+    for any of the 4 study regions and across 0-6h lead time horizons.
     Returns composite Flood Risk Scores (0-100), estimated depth brackets, and time-to-flood.
     """
-    return await execute_nowcasting_pipeline(is_simulation=False)
+    return await execute_nowcasting_pipeline(
+        study_area_id=study_area_id,
+        lead_time_hours=lead_time_hours,
+        is_simulation=False
+    )
 
 @router.post("/inspect-point")
 async def inspect_location_point(req: LocationInspectionRequest):

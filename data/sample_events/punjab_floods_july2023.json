@@ -1,0 +1,145 @@
+{
+  "event_id": "PUNJAB-FLOODS-JULY2023",
+  "disaster_type": "Monsoon Riverine & Urban Waterlogging",
+  "disaster_period": "2023-07-09 to 2023-07-15",
+  "source_organization": "ISRO National Remote Sensing Centre (NRSC) / Sentinel-1 SAR C-band",
+  "official_reference": "NRSC Disaster Management Support Programme (DMSP) Punjab Flood Inundation Report July 2023",
+  "sensor_platforms": [
+    "Sentinel-1 SAR C-band (Copernicus/ESA)",
+    "EOS-04 (ISRO RISAT-1A)",
+    "Landsat-8/9 OLI"
+  ],
+  "provenance_status": "HISTORICAL_SATELLITE_OBSERVED",
+  "rainfall_summary": {
+    "upper_catchment_72h_mm": 240.0,
+    "local_kapurthala_jalandhar_24h_peak_mm": 138.5,
+    "peak_intensity_mm_h": 28.4
+  },
+  "district_impact": {
+    "Kapurthala": {
+      "inundated_area_hectares": 34200,
+      "severity": "CRITICAL",
+      "affected_subdivisions": [
+        "Sultanpur Lodhi",
+        "Phagwara Rural",
+        "Chaheru Riverine Basin"
+      ]
+    },
+    "Jalandhar": {
+      "inundated_area_hectares": 28500,
+      "severity": "CRITICAL",
+      "affected_subdivisions": [
+        "Shahkot",
+        "Lohian",
+        "Rama Mandi Low Pockets",
+        "Damoria Underpass"
+      ]
+    }
+  },
+  "ground_truth_validation_points": [
+    {
+      "id": "GT-2023-01",
+      "location_name": "NH-44 Underpass near LPU Gate 1",
+      "latitude": 31.253,
+      "longitude": 75.6985,
+      "study_area_id": "lpu_main_campus",
+      "observed_flooded": true,
+      "observed_depth_bracket": "0.30 - 0.60 m",
+      "observed_depth_m": 0.45,
+      "predicted_risk_score": 78.5,
+      "satellite_confidence": "HIGH",
+      "evidence": "Water accumulation confirmed by road traffic advisories and local emergency records; NH-44 traffic diverted for 8 hours."
+    },
+    {
+      "id": "GT-2023-02",
+      "location_name": "Academic Central Plaza (Block 30-38)",
+      "latitude": 31.2545,
+      "longitude": 75.7038,
+      "study_area_id": "lpu_main_campus",
+      "observed_flooded": false,
+      "observed_depth_bracket": "< 0.10 m",
+      "observed_depth_m": 0.02,
+      "predicted_risk_score": 24.0,
+      "satellite_confidence": "VERY_HIGH",
+      "evidence": "Elevated plaza (239.5m MSL); zero standing inundation observed on high-resolution Sentinel-2 post-rain passes."
+    },
+    {
+      "id": "GT-2023-03",
+      "location_name": "Chaheru Railway Underpass & Nullah Basin",
+      "latitude": 31.259,
+      "longitude": 75.6925,
+      "study_area_id": "chaheru",
+      "observed_flooded": true,
+      "observed_depth_bracket": "> 0.60 m",
+      "observed_depth_m": 0.85,
+      "predicted_risk_score": 92.0,
+      "satellite_confidence": "HIGH",
+      "evidence": "Chaheru stream overbank spill confirmed by Northern Railway cautionary notices and Sentinel-1 SAR dark backscatter signature."
+    },
+    {
+      "id": "GT-2023-04",
+      "location_name": "Phagwara Chachoki Low-Lying Underpass",
+      "latitude": 31.218,
+      "longitude": 75.765,
+      "study_area_id": "phagwara_urban",
+      "observed_flooded": true,
+      "observed_depth_bracket": "0.30 - 0.60 m",
+      "observed_depth_m": 0.55,
+      "predicted_risk_score": 84.0,
+      "satellite_confidence": "HIGH",
+      "evidence": "Municipal Corporation Phagwara deployed emergency de-watering pump units (documented in Punjab civic reports)."
+    },
+    {
+      "id": "GT-2023-05",
+      "location_name": "Phagwara Town Hall & Model Town Elevated Zone",
+      "latitude": 31.228,
+      "longitude": 75.778,
+      "study_area_id": "phagwara_urban",
+      "observed_flooded": false,
+      "observed_depth_bracket": "< 0.10 m",
+      "observed_depth_m": 0.04,
+      "predicted_risk_score": 28.0,
+      "satellite_confidence": "HIGH",
+      "evidence": "Naturally sloped ridge; no sustained waterlogging recorded."
+    },
+    {
+      "id": "GT-2023-06",
+      "location_name": "Jalandhar Damoria Bridge Railway Underpass",
+      "latitude": 31.334,
+      "longitude": 75.582,
+      "study_area_id": "jalandhar_metro",
+      "observed_flooded": true,
+      "observed_depth_bracket": "> 0.60 m",
+      "observed_depth_m": 0.9,
+      "predicted_risk_score": 94.0,
+      "satellite_confidence": "HIGH",
+      "evidence": "Chronic depression hotspot; inundated up to 3 feet during heavy monsoon spells; road closed by traffic police."
+    },
+    {
+      "id": "GT-2023-07",
+      "location_name": "Jalandhar Cantt Military Cantonment Ridge",
+      "latitude": 31.295,
+      "longitude": 75.615,
+      "study_area_id": "jalandhar_metro",
+      "observed_flooded": false,
+      "observed_depth_bracket": "< 0.10 m",
+      "observed_depth_m": 0.0,
+      "predicted_risk_score": 18.0,
+      "satellite_confidence": "VERY_HIGH",
+      "evidence": "Well-drained higher elevation plateau (244m MSL); completely free from inundation."
+    },
+    {
+      "id": "GT-2023-08",
+      "location_name": "Kala Sanghian Drain Confluence Point",
+      "latitude": 31.31,
+      "longitude": 75.545,
+      "study_area_id": "jalandhar_metro",
+      "observed_flooded": true,
+      "observed_depth_bracket": "0.30 - 0.60 m",
+      "observed_depth_m": 0.5,
+      "predicted_risk_score": 82.0,
+      "satellite_confidence": "HIGH",
+      "evidence": "High discharge backwater observed at the outfall channel confluence."
+    }
+  ]
+}

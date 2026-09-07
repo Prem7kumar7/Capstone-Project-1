@@ -1,0 +1,43 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "chaheru_corridor",
+        "name": "Chaheru / Chiheru Railway & Drainage Corridor",
+        "source": "OpenStreetMap / Survey of India Georeferenced Extent",
+        "osm_type": "relation/boundary",
+        "area_km2": 4.8,
+        "base_elevation_m": 232.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              75.682,
+              31.246
+            ],
+            [
+              75.702,
+              31.246
+            ],
+            [
+              75.705,
+              31.272
+            ],
+            [
+              75.685,
+              31.272
+            ],
+            [
+              75.682,
+              31.246
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

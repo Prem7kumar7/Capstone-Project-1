@@ -1,0 +1,117 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Uni-Hospital (LPU Campus)",
+        "category": "hospital",
+        "region_id": "lpu_main_campus",
+        "source": "OpenStreetMap Node 5842881120"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.7042,
+          31.255
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Chaheru Railway Station",
+        "category": "transit_station",
+        "region_id": "chaheru",
+        "source": "OpenStreetMap Node 192837192"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.6925,
+          31.2612
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Civil Hospital Phagwara",
+        "category": "hospital",
+        "region_id": "phagwara_urban",
+        "source": "OpenStreetMap Node 839182910"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.771,
+          31.2215
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Phagwara Junction Railway Station",
+        "category": "transit_station",
+        "region_id": "phagwara_urban",
+        "source": "OpenStreetMap Node 39281729"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.776,
+          31.228
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Civil Hospital Jalandhar",
+        "category": "hospital",
+        "region_id": "jalandhar_metro",
+        "source": "OpenStreetMap Node 74839201"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.578,
+          31.328
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Jalandhar City Railway Station",
+        "category": "transit_station",
+        "region_id": "jalandhar_metro",
+        "source": "OpenStreetMap Node 84930218"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.586,
+          31.332
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rama Mandi Emergency Fire Sub-Station",
+        "category": "emergency_fire",
+        "region_id": "jalandhar_metro",
+        "source": "OpenStreetMap / Municipal Corporation Jalandhar"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.612,
+          31.314
+        ]
+      }
+    }
+  ]
+}

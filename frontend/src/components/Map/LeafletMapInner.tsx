@@ -15,13 +15,27 @@ import {
 import "leaflet/dist/leaflet.css";
 import { FloodHotspot, PointInspectionResult } from "@/types/flood";
 import { inspectLocationPoint } from "@/services/api";
-import { Layers, MapPin, AlertCircle, Compass, Eye, ShieldAlert, Navigation } from "lucide-react";
+import {
+  Layers,
+  MapPin,
+  AlertCircle,
+  Compass,
+  Eye,
+  ShieldAlert,
+  Navigation,
+  Waves,
+  Building,
+  Activity
+} from "lucide-react";
 import { ProvenanceBadge } from "../Common/ProvenanceBadge";
 
 interface Props {
   hotspots: FloodHotspot[];
   boundaryGeoJson?: any;
   roadsGeoJson?: any;
+  waterwaysGeoJson?: any;
+  infrastructureGeoJson?: any;
+  regionId?: string;
 }
 
 // Map Controller for programmatic flyTo / setView
@@ -59,16 +73,39 @@ export default function LeafletMapInner({
   hotspots,
   boundaryGeoJson,
   roadsGeoJson,
+  waterwaysGeoJson,
+  infrastructureGeoJson,
+  regionId = "lpu_main_campus",
 }: Props) {
   const [basemapType, setBasemapType] = useState<"osm" | "satellite" | "topo">("osm");
   const [showBoundary, setShowBoundary] = useState(true);
   const [showRoads, setShowRoads] = useState(true);
+  const [showWaterways, setShowWaterways] = useState(true);
+  const [showInfrastructure, setShowInfrastructure] = useState(true);
   const [showHotspots, setShowHotspots] = useState(true);
   const [showLabels, setShowLabels] = useState(true);
+
   const [mapCenter, setMapCenter] = useState<[number, number]>([31.2533, 75.7033]);
-  const [mapZoom, setMapZoom] = useState<number>(16.2); // Focused directly on LPU Campus
+  const [mapZoom, setMapZoom] = useState<number>(16.2);
   const [selectedPoint, setSelectedPoint] = useState<PointInspectionResult | null>(null);
   const [isInspecting, setIsInspecting] = useState(false);
+
+  // Automatically update map center & zoom when user switches study region
+  useEffect(() => {
+    if (regionId === "lpu_main_campus") {
+      setMapCenter([31.2533, 75.7033]);
+      setMapZoom(16.2);
+    } else if (regionId === "chaheru") {
+      setMapCenter([31.2590, 75.6940]);
+      setMapZoom(15.5);
+    } else if (regionId === "phagwara_urban") {
+      setMapCenter([31.2207, 75.7725]);
+      setMapZoom(14.5);
+    } else if (regionId === "jalandhar_metro") {
+      setMapCenter([31.3260, 75.5762]);
+      setMapZoom(13.5);
+    }
+  }, [regionId]);
 
   // Extract boundary coordinates
   let boundaryCoords: [number, number][] = [];
@@ -82,6 +119,27 @@ export default function LeafletMapInner({
   if (roadsGeoJson && roadsGeoJson.features && roadsGeoJson.features.length > 0) {
     const rawCoords = roadsGeoJson.features[0].geometry.coordinates;
     roadCoords = rawCoords.map((c: [number, number]) => [c[1], c[0]]);
+  }
+
+  // Extract waterways polylines
+  let waterwayLines: { name: string; type: string; description: string; coords: [number, number][] }[] = [];
+  if (waterwaysGeoJson && waterwaysGeoJson.features) {
+    waterwayLines = waterwaysGeoJson.features.map((f: any) => ({
+      name: f.properties?.name || "Waterway Channel",
+      type: f.properties?.type || "drain",
+      description: f.properties?.description || "",
+      coords: (f.geometry?.coordinates || []).map((c: [number, number]) => [c[1], c[0]]),
+    }));
+  }
+
+  // Extract critical infrastructure points
+  let infraPoints: { name: string; category: string; coords: [number, number] }[] = [];
+  if (infrastructureGeoJson && infrastructureGeoJson.features) {
+    infraPoints = infrastructureGeoJson.features.map((f: any) => ({
+      name: f.properties?.name || "Critical Facility",
+      category: f.properties?.category || "facility",
+      coords: [f.geometry.coordinates[1], f.geometry.coordinates[0]],
+    }));
   }
 
   const handleInspect = async (lat: number, lon: number) => {
@@ -98,49 +156,53 @@ export default function LeafletMapInner({
 
   // Watermark-free tile definitions
   let tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-  let tileAttribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+  let tileAttribution =
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
   let maxZoom = 19;
 
   if (basemapType === "satellite") {
-    tileUrl = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
-    tileAttribution = "Tiles &copy; Esri, Maxar, Earthstar Geographics, USDA, USGS";
+    tileUrl =
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
+    tileAttribution =
+      "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community";
     maxZoom = 19;
   } else if (basemapType === "topo") {
     tileUrl = "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png";
-    tileAttribution = '&copy; <a href="https://opentopomap.org">OpenTopoMap</a> contributors';
+    tileAttribution =
+      'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)';
     maxZoom = 17;
   }
 
   return (
-    <div className="relative w-full h-full min-h-[540px] rounded-lg overflow-hidden border border-slate-800 shadow-2xl bg-slate-950 flex flex-col">
-      {/* Top Header Controls */}
-      <div className="bg-slate-900 border-b border-slate-800 px-4 py-2 flex items-center justify-between text-xs z-10 flex-wrap gap-2">
+    <div className="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden flex flex-col h-full min-h-[580px]">
+      {/* Top Map Context Bar */}
+      <div className="bg-slate-950 border-b border-slate-800 px-3.5 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs">
         <div className="flex items-center gap-2">
           <span className="font-bold text-white flex items-center gap-1.5">
             <Compass className="w-3.5 h-3.5 text-sky-400" />
-            Study Area:
+            Active View:
           </span>
-          <span className="text-slate-200 font-semibold">
-            Lovely Professional University (LPU), Phagwara
+          <span className="text-slate-200 font-semibold uppercase">
+            {regionId.replace(/_/g, " ")}
           </span>
           <span className="text-slate-500 text-[11px] font-mono hidden sm:inline">
-            (31.2533°N, 75.7033°E)
+            ({mapCenter[0].toFixed(4)}°N, {mapCenter[1].toFixed(4)}°E)
           </span>
         </div>
 
         {/* Quick Navigation Targets */}
         <div className="flex items-center gap-1.5 font-mono text-[11px]">
-          <span className="text-slate-400 mr-1 text-[10px] uppercase tracking-wider font-sans">Focus:</span>
+          <span className="text-slate-400 mr-1 text-[10px] uppercase tracking-wider font-sans">Preset:</span>
           <button
             onClick={() => {
               setMapCenter([31.2533, 75.7033]);
               setMapZoom(16.2);
             }}
             className="px-2 py-0.5 bg-blue-950 hover:bg-blue-900 text-blue-300 rounded border border-blue-800 transition flex items-center gap-1"
-            title="Zoom directly into Lovely Professional University campus"
+            title="LPU Academic & Residential Blocks"
           >
             <Navigation className="w-2.5 h-2.5" />
-            LPU Campus
+            LPU Core
           </button>
           <button
             onClick={() => {
@@ -155,19 +217,19 @@ export default function LeafletMapInner({
           </button>
           <button
             onClick={() => {
-              setMapCenter([31.2400, 75.7350]);
-              setMapZoom(13);
+              setMapCenter([31.2590, 75.6925]);
+              setMapZoom(16.0);
             }}
-            className="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 transition"
-            title="Zoom out to Regional Jalandhar-Phagwara Basin"
+            className="px-2 py-0.5 bg-teal-950 hover:bg-teal-900 text-teal-300 rounded border border-teal-800 transition"
+            title="Chaheru Rail & Stream Basin"
           >
-            Phagwara Basin
+            Chaheru Rail
           </button>
         </div>
       </div>
 
       {/* Map Viewport */}
-      <div className="relative flex-1 w-full h-full min-h-[440px]">
+      <div className="relative flex-1 w-full h-full min-h-[460px]">
         <MapContainer
           center={mapCenter}
           zoom={mapZoom}
@@ -185,7 +247,7 @@ export default function LeafletMapInner({
             maxZoom={maxZoom}
           />
 
-          {/* Verified LPU Campus Boundary Polygon */}
+          {/* Study Area Boundary Polygon */}
           {showBoundary && boundaryCoords.length > 0 && (
             <Polygon
               positions={boundaryCoords}
@@ -199,36 +261,96 @@ export default function LeafletMapInner({
             >
               <Popup>
                 <div className="p-1 font-sans text-xs">
-                  <div className="font-bold text-slate-100 text-sm mb-0.5">Lovely Professional University</div>
-                  <div className="text-slate-300">Verified Campus Boundary (OSM Way 422435593)</div>
-                  <div className="text-[11px] text-slate-400 font-mono mt-1">Area: ~600 Acres | Elevation: ~238m</div>
+                  <div className="font-bold text-slate-100 text-sm mb-0.5">Study Area Extent</div>
+                  <div className="text-slate-300">Verified Geographic Boundary ({regionId})</div>
                   <div className="text-[10px] text-emerald-400 font-mono mt-1">Status: Verified Spatial Extent</div>
                 </div>
               </Popup>
             </Polygon>
           )}
 
-          {/* NH-44 Highway Road LineString */}
+          {/* Road Network (NH-44) */}
           {showRoads && roadCoords.length > 0 && (
             <Polyline
               positions={roadCoords}
               pathOptions={{
                 color: "#d97706",
-                weight: 5,
+                weight: 4.5,
                 opacity: 0.9,
               }}
             >
               <Popup>
                 <div className="p-1 font-sans text-xs">
                   <div className="font-bold text-slate-100 text-sm mb-0.5">NH-44 (Grand Trunk Road)</div>
-                  <div className="text-slate-300">Delhi &ndash; Jalandhar Highway passing LPU Main Gates</div>
+                  <div className="text-slate-300">Arterial Highway connecting Jalandhar &ndash; Chaheru &ndash; LPU &ndash; Phagwara</div>
                   <div className="text-[10px] text-amber-300 font-mono mt-1">
-                    Critical Hotspot: Underpass near Gate 1 (233.1m elevation depression)
+                    Bottlenecks: Low-lying underpasses along corridor
                   </div>
                 </div>
               </Popup>
             </Polyline>
           )}
+
+          {/* Regional Waterways & Natural Drainage Chos */}
+          {showWaterways &&
+            waterwayLines.map((w, idx) => (
+              <Polyline
+                key={`waterway-${idx}`}
+                positions={w.coords}
+                pathOptions={{
+                  color: "#06b6d4",
+                  weight: 3.5,
+                  opacity: 0.85,
+                  dashArray: "5, 5",
+                }}
+              >
+                <Tooltip direction="top" offset={[0, -5]}>
+                  <div className="font-sans font-bold text-[10px] text-cyan-200 bg-slate-950 px-2 py-0.5 rounded border border-cyan-800">
+                    🌊 {w.name} ({w.type})
+                  </div>
+                </Tooltip>
+                <Popup>
+                  <div className="p-1 font-sans text-xs">
+                    <div className="font-bold text-cyan-400 text-sm">{w.name}</div>
+                    <div className="text-slate-300 text-[11px] mt-0.5">{w.description}</div>
+                    <div className="text-[10px] text-slate-400 font-mono mt-1">
+                      Role: Natural stormwater conveyance & receiving outfall
+                    </div>
+                  </div>
+                </Popup>
+              </Polyline>
+            ))}
+
+          {/* Critical Civic Infrastructure */}
+          {showInfrastructure &&
+            infraPoints.map((inf, idx) => (
+              <CircleMarker
+                key={`infra-${idx}`}
+                center={inf.coords}
+                radius={7}
+                pathOptions={{
+                  color: "#ffffff",
+                  weight: 1.5,
+                  fillColor: inf.category === "hospital" ? "#ef4444" : "#8b5cf6",
+                  fillOpacity: 0.9,
+                }}
+              >
+                <Tooltip direction="top" offset={[0, -8]}>
+                  <div className="font-sans font-bold text-[10px] text-white bg-slate-950 px-2 py-0.5 rounded border border-slate-700">
+                    {inf.category === "hospital" ? "🏥" : "🚉"} {inf.name}
+                  </div>
+                </Tooltip>
+                <Popup>
+                  <div className="p-1 font-sans text-xs">
+                    <div className="font-bold text-white text-sm">{inf.name}</div>
+                    <div className="text-slate-400 text-[11px] uppercase">{inf.category}</div>
+                    <div className="text-[10px] text-emerald-400 font-mono mt-1">
+                      Status: Critical Community Asset (Priority Flood Protection)
+                    </div>
+                  </div>
+                </Popup>
+              </CircleMarker>
+            ))}
 
           {/* Dynamic Flood Hotspot Markers with Permanent Labels */}
           {showHotspots &&
@@ -329,7 +451,7 @@ export default function LeafletMapInner({
         </MapContainer>
 
         {/* Floating Layer & Basemap Switcher (Top Right) */}
-        <div className="absolute top-4 right-4 z-[1000] bg-slate-900/95 backdrop-blur border border-slate-800 rounded-lg p-3 shadow-xl text-xs space-y-2.5 max-w-[210px]">
+        <div className="absolute top-4 right-4 z-[1000] bg-slate-900/95 backdrop-blur border border-slate-800 rounded-lg p-3 shadow-xl text-xs space-y-2.5 max-w-[220px]">
           <div>
             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1">
               <Eye className="w-3 h-3 text-sky-400" />
@@ -365,7 +487,7 @@ export default function LeafletMapInner({
               Overlays
             </div>
 
-            <label className="flex items-center gap-2 text-slate-300 cursor-pointer">
+            <label className="flex items-center gap-2 text-slate-300 cursor-pointer text-[11px]">
               <input
                 type="checkbox"
                 checked={showHotspots}
@@ -375,7 +497,7 @@ export default function LeafletMapInner({
               <span>Flood Hotspots</span>
             </label>
 
-            <label className="flex items-center gap-2 text-slate-300 cursor-pointer">
+            <label className="flex items-center gap-2 text-slate-300 cursor-pointer text-[11px]">
               <input
                 type="checkbox"
                 checked={showLabels}
@@ -385,24 +507,44 @@ export default function LeafletMapInner({
               <span>Location Names</span>
             </label>
 
-            <label className="flex items-center gap-2 text-slate-300 cursor-pointer">
+            <label className="flex items-center gap-2 text-slate-300 cursor-pointer text-[11px]">
               <input
                 type="checkbox"
                 checked={showBoundary}
                 onChange={(e) => setShowBoundary(e.target.checked)}
                 className="rounded bg-slate-800 border-slate-700 text-sky-500 focus:ring-0"
               />
-              <span>Campus Boundary</span>
+              <span>Study Boundary</span>
             </label>
 
-            <label className="flex items-center gap-2 text-slate-300 cursor-pointer">
+            <label className="flex items-center gap-2 text-slate-300 cursor-pointer text-[11px]">
               <input
                 type="checkbox"
                 checked={showRoads}
                 onChange={(e) => setShowRoads(e.target.checked)}
                 className="rounded bg-slate-800 border-slate-700 text-sky-500 focus:ring-0"
               />
-              <span>NH-44 Highway</span>
+              <span>Roads / NH-44</span>
+            </label>
+
+            <label className="flex items-center gap-2 text-slate-300 cursor-pointer text-[11px]">
+              <input
+                type="checkbox"
+                checked={showWaterways}
+                onChange={(e) => setShowWaterways(e.target.checked)}
+                className="rounded bg-slate-800 border-slate-700 text-cyan-500 focus:ring-0"
+              />
+              <span className="text-cyan-300 font-semibold">Natural Drains & Chos</span>
+            </label>
+
+            <label className="flex items-center gap-2 text-slate-300 cursor-pointer text-[11px]">
+              <input
+                type="checkbox"
+                checked={showInfrastructure}
+                onChange={(e) => setShowInfrastructure(e.target.checked)}
+                className="rounded bg-slate-800 border-slate-700 text-purple-500 focus:ring-0"
+              />
+              <span className="text-purple-300 font-semibold">Critical Civic Assets</span>
             </label>
           </div>
         </div>

@@ -19,19 +19,29 @@ def test_health_endpoint():
 def test_study_area_endpoints():
     r1 = client.get("/api/v1/study-area")
     assert r1.status_code == 200
-    assert r1.json()["study_area_id"] == "lpu_main_campus"
+    data = r1.json()
+    assert data["study_area_id"] == "lpu_main_campus"
+    assert len(data["available_areas"]) == 4
 
-    r2 = client.get("/api/v1/study-area/boundary")
-    assert r2.status_code == 200
-    assert r2.json()["type"] == "FeatureCollection"
+    # Test all 4 regions boundaries
+    for reg_id in ["lpu_main_campus", "chaheru", "phagwara_urban", "jalandhar_metro"]:
+        r_b = client.get(f"/api/v1/study-area/boundary?region_id={reg_id}")
+        assert r_b.status_code == 200
+        assert r_b.json()["type"] == "FeatureCollection"
 
-    r3 = client.get("/api/v1/study-area/roads")
-    assert r3.status_code == 200
-    assert r3.json()["type"] == "FeatureCollection"
+    # Test waterways and infrastructure
+    r_w = client.get("/api/v1/study-area/waterways")
+    assert r_w.status_code == 200
+    assert r_w.json()["type"] == "FeatureCollection"
 
+    r_inf = client.get("/api/v1/study-area/infrastructure")
+    assert r_inf.status_code == 200
+    assert r_inf.json()["type"] == "FeatureCollection"
+
+    # Test drainage status (transparent declaration)
     r4 = client.get("/api/v1/study-area/drainage-status")
     assert r4.status_code == 200
-    assert r4.json()["drainage_data_availability"] == "NOT_AVAILABLE"
+    assert "LEVEL_2" in r4.json()["drainage_data_availability"]
 
 def test_weather_endpoints():
     r = client.get("/api/v1/weather/current")
@@ -52,6 +62,12 @@ def test_nowcasting_endpoints():
     r2 = client.get("/api/v1/nowcasting/advanced-status")
     assert r2.status_code == 200
     assert r2.json()["optical_flow_module"]["status"] == "AWAITING_RADAR_FEED"
+
+    r3 = client.get("/api/v1/nowcasting/timeline?study_area_id=lpu_main_campus")
+    assert r3.status_code == 200
+    timeline = r3.json()["forecast_horizons"]
+    assert len(timeline) == 9 # 0h, 15m, 30m, 1h, 2h, 3h, 4h, 5h, 6h
+    assert timeline[0]["label"] == "Now (0h)"
 
 def test_flood_risk_endpoint():
     r = client.get("/api/v1/flood/current-risk")
@@ -98,13 +114,15 @@ def test_data_health_endpoint():
     data = r.json()
     assert len(data["providers"]) >= 5
 
-def test_validation_insufficient_ground_truth_policy():
+def test_validation_satellite_ground_truth():
     r = client.get("/api/v1/validation/metrics")
     assert r.status_code == 200
     data = r.json()
-    assert data["validation_status"] == "INSUFFICIENT_GROUND_TRUTH"
-    assert data["total_events_recorded"] == 0
-    assert "Validation dataset insufficient" in data["message"]
+    assert data["validation_status"] in ["VALIDATED", "PARTIALLY_VALIDATED"]
+    assert data["total_events_recorded"] >= 5
+    assert data["metrics"] is not None
+    assert data["metrics"]["precision"] > 0.70
+    assert data["metrics"]["recall"] > 0.70
 
 def test_hydrology_config_api():
     r = client.get("/api/v1/hydrology/config")
