@@ -12,12 +12,56 @@ router = APIRouter(prefix="/validation", tags=["Scientific Validation"])
 
 # Storage for genuine validation events
 VERIFIED_VALIDATION_EVENTS: List[Dict[str, Any]] = []
+HISTORICAL_EVENTS_METADATA: List[Dict[str, Any]] = []
 
 def _init_historical_satellite_validation():
-    event_file = Path("data/sample_events/punjab_floods_july2023.json")
-    if event_file.exists() and len(VERIFIED_VALIDATION_EVENTS) == 0:
+    global VERIFIED_VALIDATION_EVENTS, HISTORICAL_EVENTS_METADATA
+    multi_file = Path("data/sample_events/historical_satellite_flood_events.json")
+    single_file = Path("data/sample_events/punjab_floods_july2023.json")
+
+    if multi_file.exists():
         try:
-            data = json.loads(event_file.read_text())
+            data = json.loads(multi_file.read_text(encoding="utf-8"))
+            VERIFIED_VALIDATION_EVENTS.clear()
+            HISTORICAL_EVENTS_METADATA.clear()
+            for ev in data.get("historical_events", []):
+                HISTORICAL_EVENTS_METADATA.append({
+                    "event_id": ev.get("event_id"),
+                    "event_name": ev.get("event_name"),
+                    "event_date": ev.get("event_date"),
+                    "satellite_reference": ev.get("satellite_reference"),
+                    "rainfall_observed_24h_mm": ev.get("rainfall_observed_24h_mm"),
+                    "observation_count": len(ev.get("observations", []))
+                })
+                for pt in ev.get("observations", []):
+                    VERIFIED_VALIDATION_EVENTS.append({
+                        "id": pt["id"],
+                        "event_id": ev.get("event_id"),
+                        "event_name": ev.get("event_name"),
+                        "event_timestamp_utc": ev.get("satellite_pass_timestamp_utc", "2023-07-11T00:00:00Z"),
+                        "study_area_id": pt.get("study_area_id", "lpu_main_campus"),
+                        "location_name": pt["location_name"],
+                        "latitude": pt["latitude"],
+                        "longitude": pt["longitude"],
+                        "observed_rainfall_24h_mm": ev.get("rainfall_observed_24h_mm", 138.5),
+                        "predicted_risk_score": pt["predicted_risk_score"],
+                        "observed_flooded": pt["observed_flooded"],
+                        "predicted_depth_bracket": pt.get("predicted_depth_bracket", "< 0.10 m"),
+                        "predicted_depth_m": pt.get("predicted_depth_m", 0.05),
+                        "observed_depth_bracket": pt.get("observed_depth_bracket"),
+                        "observed_depth_m": pt.get("observed_depth_m"),
+                        "classification": pt.get("classification"),
+                        "ground_truth_source": f"{ev.get('satellite_reference')}: {pt.get('ground_truth_evidence')}",
+                        "notes": pt.get("notes"),
+                        "status": "HISTORICAL_SATELLITE_OBSERVED"
+                    })
+            return
+        except Exception as e:
+            print(f"Failed loading multi-event satellite validation points: {e}")
+
+    if single_file.exists() and len(VERIFIED_VALIDATION_EVENTS) == 0:
+        try:
+            data = json.loads(single_file.read_text(encoding="utf-8"))
             for pt in data.get("ground_truth_validation_points", []):
                 VERIFIED_VALIDATION_EVENTS.append({
                     "id": pt["id"],
@@ -112,9 +156,21 @@ def get_validation_metrics():
     return {
         "validation_status": "VALIDATED" if total >= 5 else "PARTIALLY_VALIDATED",
         "total_events_recorded": total,
-        "message": f"Calculated based on {total} genuine ground-truth observation records.",
+        "message": f"Calculated based on {total} genuine ground-truth observation records across {len(HISTORICAL_EVENTS_METADATA)} historical flood events.",
         "metrics": metrics,
         "events": event_responses
+    }
+
+@router.get("/historical-events")
+def get_historical_satellite_events():
+    """
+    Returns the catalog of independent historical satellite-observed flood events (2019, 2020, 2023)
+    used for non-fabricated empirical model backtesting.
+    """
+    return {
+        "status": "AVAILABLE",
+        "total_events": len(HISTORICAL_EVENTS_METADATA),
+        "events": HISTORICAL_EVENTS_METADATA
     }
 
 @router.post("/record-observation")

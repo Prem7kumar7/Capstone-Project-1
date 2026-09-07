@@ -1,0 +1,104 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kala Sanghian Drain (Jalandhar Municipal Outfall)",
+        "category": "ENGINEERED_STORMWATER_DRAIN",
+        "channel_type": "Constructed open trapezoidal stormwater & effluent channel",
+        "maintained_by": "Punjab Water Resources Department (Jalandhar Drainage Division)",
+        "cross_section_description": "Excavated trapezoidal earth-and-masonry stormwater outfall",
+        "source": "Punjab Water Resources Department / OSM",
+        "provenance": "DERIVED_MAPPED_CHANNELS"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            75.59,
+            31.35
+          ],
+          [
+            75.565,
+            31.325
+          ],
+          [
+            75.535,
+            31.3
+          ],
+          [
+            75.505,
+            31.275
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Phagwara Choe (Municipal Stormwater Conveyance)",
+        "category": "ENGINEERED_STORMWATER_DRAIN",
+        "channel_type": "Dredged urban stormwater outfall channel",
+        "maintained_by": "Kapurthala Drainage Division / MC Phagwara",
+        "cross_section_description": "Open trapezoidal drainage trench discharging urban runoff southward",
+        "source": "Punjab Water Resources Department / OSM",
+        "provenance": "DERIVED_MAPPED_CHANNELS"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            75.78,
+            31.24
+          ],
+          [
+            75.765,
+            31.228
+          ],
+          [
+            75.75,
+            31.215
+          ],
+          [
+            75.735,
+            31.2
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "NH-44 Highway Roadside Saucer Drains",
+        "category": "ROADSIDE_STORMWATER_SWALE",
+        "channel_type": "Concrete saucer / earthen highway median drains",
+        "maintained_by": "National Highways Authority of India (NHAI)",
+        "cross_section_description": "IRC:SP:42 concrete lined roadside saucer collectors conveying overland highway runoff towards culverts",
+        "source": "IRC:SP:42 Guidelines / OpenStreetMap",
+        "provenance": "DERIVED_ENGINEERING_STANDARDS"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            75.71,
+            31.25
+          ],
+          [
+            75.7,
+            31.253
+          ],
+          [
+            75.695,
+            31.257
+          ],
+          [
+            75.69,
+            31.262
+          ]
+        ]
+      }
+    }
+  ]
+}

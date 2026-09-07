@@ -8,6 +8,8 @@ class OSMProvider(BaseProvider):
     def __init__(self):
         super().__init__(provider_name="OpenStreetMap / Verified Base", provider_type="GIS")
         self.waterways_file = settings.STUDY_AREAS_DIR / "regional_waterways.geojson"
+        self.natural_waterways_file = settings.STUDY_AREAS_DIR / "natural_waterways.geojson"
+        self.urban_drains_file = settings.STUDY_AREAS_DIR / "urban_stormwater_drains.geojson"
         self.infra_file = settings.STUDY_AREAS_DIR / "critical_infrastructure.geojson"
 
     async def check_health(self) -> Dict[str, Any]:
@@ -23,7 +25,8 @@ class OSMProvider(BaseProvider):
                 "verified_regions": list(settings.STUDY_REGIONS.keys()),
                 "verified_layers": [
                     "lpu_osm_boundary", "chaheru_osm_boundary", "phagwara_osm_boundary",
-                    "jalandhar_osm_boundary", "nh44_osm_trunk", "regional_waterways", "critical_infrastructure"
+                    "jalandhar_osm_boundary", "nh44_osm_trunk", "natural_waterways",
+                    "urban_stormwater_drains", "critical_infrastructure"
                 ],
                 "drainage_data_status": "SURFACE_AND_NATURAL_CHOS_AVAILABLE",
                 "infrastructure_status": "CIVIC_ASSETS_VERIFIED"
@@ -42,7 +45,17 @@ class OSMProvider(BaseProvider):
         rfile = settings.STUDY_AREAS_DIR / cfg.get("roads_file", "nh44_osm_trunk.geojson")
         return load_geojson_safe(rfile)
 
+    def get_natural_waterways(self) -> Dict[str, Any]:
+        """Returns genuine natural river/stream corridors (Kali Bein river, Chaheru stream)."""
+        target = self.natural_waterways_file if self.natural_waterways_file.exists() else self.waterways_file
+        return load_geojson_safe(target)
+
+    def get_urban_drainage(self) -> Dict[str, Any]:
+        """Returns engineered municipal open stormwater drains (Kala Sanghian, Phagwara Choe, NH-44 saucer drains)."""
+        return load_geojson_safe(self.urban_drains_file)
+
     def get_waterways(self) -> Dict[str, Any]:
+        """Returns combined regional waterways for backward compatibility."""
         return load_geojson_safe(self.waterways_file)
 
     def get_critical_infrastructure(self, region_id: str = None) -> Dict[str, Any]:

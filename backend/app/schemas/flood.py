@@ -9,6 +9,9 @@ class FloodHotspotResponse(BaseModel):
     elevation_m: Optional[float] = None
     flood_risk_score: float = Field(..., ge=0.0, le=100.0, description="Composite Flood Risk Score (0-100), uncalibrated index")
     risk_category: str  # VERY_LOW, LOW, MODERATE, HIGH, EXTREME
+    node_classification: Optional[str] = "MODEL_DERIVED_CANDIDATE"
+    node_status_label: Optional[str] = "MODEL-DERIVED CANDIDATE (Topographic Proxy)"
+    is_field_verified_sensor: Optional[bool] = False
     estimated_depth_bracket: str  # < 0.10 m, 0.10-0.30 m, etc.
     estimated_depth_label: str = "MODEL ESTIMATE"
     estimated_time_to_flood: str  # 0-30 min, 30-60 min, etc.

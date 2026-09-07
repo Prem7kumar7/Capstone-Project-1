@@ -29,10 +29,20 @@ def test_study_area_endpoints():
         assert r_b.status_code == 200
         assert r_b.json()["type"] == "FeatureCollection"
 
-    # Test waterways and infrastructure
+    # Test natural waterways vs urban drainage separation
     r_w = client.get("/api/v1/study-area/waterways")
     assert r_w.status_code == 200
     assert r_w.json()["type"] == "FeatureCollection"
+
+    r_nw = client.get("/api/v1/study-area/natural-waterways")
+    assert r_nw.status_code == 200
+    assert r_nw.json()["type"] == "FeatureCollection"
+    assert any("Kali Bein" in f.get("properties", {}).get("name", "") for f in r_nw.json()["features"])
+
+    r_ud = client.get("/api/v1/study-area/urban-drainage")
+    assert r_ud.status_code == 200
+    assert r_ud.json()["type"] == "FeatureCollection"
+    assert any("Kala Sanghian" in f.get("properties", {}).get("name", "") for f in r_ud.json()["features"])
 
     r_inf = client.get("/api/v1/study-area/infrastructure")
     assert r_inf.status_code == 200
@@ -76,6 +86,11 @@ def test_flood_risk_endpoint():
     assert "max_flood_risk_score" in data
     assert "highest_estimated_depth_bracket" in data
     assert len(data["hotspots"]) > 0
+    # Verify candidate node labeling (no fake verified sensor claim)
+    h0 = data["hotspots"][0]
+    assert h0["node_classification"] == "MODEL_DERIVED_CANDIDATE"
+    assert h0["is_field_verified_sensor"] is False
+    assert "MODEL-DERIVED CANDIDATE" in h0["node_status_label"]
     # Verify terminology
     assert "flood_probability" not in str(data).lower()
 
@@ -115,14 +130,29 @@ def test_data_health_endpoint():
     assert len(data["providers"]) >= 5
 
 def test_validation_satellite_ground_truth():
+    # Test catalog of independent historical events
+    r_ev = client.get("/api/v1/validation/historical-events")
+    assert r_ev.status_code == 200
+    ev_data = r_ev.json()
+    assert ev_data["total_events"] == 3
+    event_ids = [e["event_id"] for e in ev_data["events"]]
+    assert "EV-2019-08-PUNJAB-SUTLEJ-DELUGE" in event_ids
+    assert "EV-2020-08-JALANDHAR-CLOUDBURST" in event_ids
+    assert "EV-2023-07-PUNJAB-MONSOON-DELUGE" in event_ids
+
+    # Test aggregate validation metrics across historical events
     r = client.get("/api/v1/validation/metrics")
     assert r.status_code == 200
     data = r.json()
-    assert data["validation_status"] in ["VALIDATED", "PARTIALLY_VALIDATED"]
-    assert data["total_events_recorded"] >= 5
+    assert data["validation_status"] == "VALIDATED"
+    assert data["total_events_recorded"] == 22
     assert data["metrics"] is not None
-    assert data["metrics"]["precision"] > 0.70
-    assert data["metrics"]["recall"] > 0.70
+    # Scientific realistic metrics (incorporating unmapped pumping FPs and debris clogging FNs)
+    assert 0.75 <= data["metrics"]["precision"] <= 0.95
+    assert 0.75 <= data["metrics"]["recall"] <= 0.95
+    assert data["metrics"]["f1_score"] > 0.80
+    assert data["metrics"]["depth_mae_m"] is not None
+    assert data["metrics"]["depth_mae_m"] < 0.20
 
 def test_hydrology_config_api():
     r = client.get("/api/v1/hydrology/config")

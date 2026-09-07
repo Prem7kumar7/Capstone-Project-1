@@ -1,0 +1,70 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kali Bein River (Regional Receiving Spine)",
+        "category": "NATURAL_RIVER",
+        "hydrology_type": "Perennial / Spring-fed alluvial river",
+        "length_km": 160.0,
+        "discharge_capacity_status": "Natural floodway; backwater effects occur during Sutlej high stages",
+        "source": "Survey of India / OpenStreetMap River Polyline",
+        "provenance": "HISTORICAL_VERIFIED"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            75.5,
+            31.27
+          ],
+          [
+            75.485,
+            31.24
+          ],
+          [
+            75.47,
+            31.2
+          ],
+          [
+            75.45,
+            31.15
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Chaheru Natural Stream / Nullah",
+        "category": "NATURAL_STREAM",
+        "hydrology_type": "Natural seasonal drainage channel (Choe tributary)",
+        "description": "Natural stream originating upstream, passing beneath NH-44 and railway bridge near Chaheru, receiving campus western overland runoff.",
+        "source": "OpenStreetMap Natural Waterway Way 23819283",
+        "provenance": "HISTORICAL_VERIFIED"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            75.688,
+            31.265
+          ],
+          [
+            75.692,
+            31.258
+          ],
+          [
+            75.695,
+            31.251
+          ],
+          [
+            75.697,
+            31.244
+          ]
+        ]
+      }
+    }
+  ]
+}

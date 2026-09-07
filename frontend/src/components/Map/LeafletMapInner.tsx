@@ -121,15 +121,21 @@ export default function LeafletMapInner({
     roadCoords = rawCoords.map((c: [number, number]) => [c[1], c[0]]);
   }
 
-  // Extract waterways polylines
-  let waterwayLines: { name: string; type: string; description: string; coords: [number, number][] }[] = [];
+  // Extract waterways polylines with natural vs urban separation
+  let waterwayLines: { name: string; type: string; category: string; description: string; isNatural: boolean; coords: [number, number][] }[] = [];
   if (waterwaysGeoJson && waterwaysGeoJson.features) {
-    waterwayLines = waterwaysGeoJson.features.map((f: any) => ({
-      name: f.properties?.name || "Waterway Channel",
-      type: f.properties?.type || "drain",
-      description: f.properties?.description || "",
-      coords: (f.geometry?.coordinates || []).map((c: [number, number]) => [c[1], c[0]]),
-    }));
+    waterwayLines = waterwaysGeoJson.features.map((f: any) => {
+      const cat = f.properties?.category || "";
+      const isNat = cat.includes("NATURAL") || f.properties?.name?.includes("River") || f.properties?.name?.includes("Chaheru Natural");
+      return {
+        name: f.properties?.name || "Waterway Channel",
+        type: f.properties?.type || (isNat ? "natural_waterway" : "stormwater_drain"),
+        category: cat || (isNat ? "NATURAL_WATERWAY" : "URBAN_DRAIN"),
+        description: f.properties?.description || (isNat ? "Natural river / stream corridor" : "Engineered urban stormwater outfall channel"),
+        isNatural: isNat,
+        coords: (f.geometry?.coordinates || []).map((c: [number, number]) => [c[1], c[0]]),
+      };
+    });
   }
 
   // Extract critical infrastructure points
@@ -291,30 +297,34 @@ export default function LeafletMapInner({
             </Polyline>
           )}
 
-          {/* Regional Waterways & Natural Drainage Chos */}
+          {/* Regional Waterways (Natural Rivers) & Urban Stormwater Drains */}
           {showWaterways &&
             waterwayLines.map((w, idx) => (
               <Polyline
                 key={`waterway-${idx}`}
                 positions={w.coords}
                 pathOptions={{
-                  color: "#06b6d4",
-                  weight: 3.5,
-                  opacity: 0.85,
-                  dashArray: "5, 5",
+                  color: w.isNatural ? "#06b6d4" : "#f59e0b",
+                  weight: w.isNatural ? 4.0 : 3.0,
+                  opacity: 0.9,
+                  dashArray: w.isNatural ? undefined : "6, 6",
                 }}
               >
                 <Tooltip direction="top" offset={[0, -5]}>
-                  <div className="font-sans font-bold text-[10px] text-cyan-200 bg-slate-950 px-2 py-0.5 rounded border border-cyan-800">
-                    🌊 {w.name} ({w.type})
+                  <div className={`font-sans font-bold text-[10px] px-2 py-0.5 rounded border shadow ${
+                    w.isNatural ? "text-cyan-200 bg-slate-950 border-cyan-800" : "text-amber-200 bg-slate-950 border-amber-800"
+                  }`}>
+                    {w.isNatural ? "🌊 [NATURAL WATERWAY]" : "⚡ [URBAN STORMWATER DRAIN]"} {w.name}
                   </div>
                 </Tooltip>
                 <Popup>
                   <div className="p-1 font-sans text-xs">
-                    <div className="font-bold text-cyan-400 text-sm">{w.name}</div>
+                    <div className={`font-bold text-sm ${w.isNatural ? "text-cyan-400" : "text-amber-400"}`}>
+                      {w.isNatural ? "🌊 " : "⚡ "}{w.name}
+                    </div>
                     <div className="text-slate-300 text-[11px] mt-0.5">{w.description}</div>
                     <div className="text-[10px] text-slate-400 font-mono mt-1">
-                      Role: Natural stormwater conveyance & receiving outfall
+                      Classification: {w.isNatural ? "Natural alluvial stream / river corridor" : "Constructed municipal open stormwater drainage"}
                     </div>
                   </div>
                 </Popup>
@@ -433,8 +443,9 @@ export default function LeafletMapInner({
                         </div>
                       </div>
 
-                      <div className="text-[10px] text-amber-300/90 font-mono">
-                        [MODEL ESTIMATE &bull; Uncalibrated Index]
+                      <div className="text-[10px] text-amber-300 font-mono bg-amber-950/40 p-1 rounded border border-amber-900/50">
+                        [MODEL-DERIVED CANDIDATE &bull; Topographic Proxy]
+                        <div className="text-[9px] text-slate-400">Station Verification: Candidate Node (No Field Sensor)</div>
                       </div>
 
                       <button

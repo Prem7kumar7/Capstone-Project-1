@@ -445,6 +445,9 @@ async def execute_nowcasting_pipeline(
             "elevation_m": node["elevation_m"],
             "flood_risk_score": score,
             "risk_category": cat,
+            "node_classification": "MODEL_DERIVED_CANDIDATE",
+            "node_status_label": "MODEL-DERIVED CANDIDATE (Topographic Proxy)",
+            "is_field_verified_sensor": False,
             "estimated_depth_bracket": depth_res["estimated_depth_bracket"],
             "estimated_depth_label": "MODEL ESTIMATE",
             "estimated_time_to_flood": time_res["estimated_time_to_flood"],
@@ -457,7 +460,7 @@ async def execute_nowcasting_pipeline(
                 "surcharge_ratio": drain_res["surcharge_ratio"],
                 "notes": node["notes"]
             },
-            "data_provenance": provenance
+            "data_provenance": "DERIVED" if provenance == "LIVE" else provenance
         })
 
     # Overall severity

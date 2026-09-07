@@ -43,8 +43,18 @@ def get_roads_geojson(region_id: str = Query("lpu_main_campus")):
 
 @router.get("/waterways")
 def get_regional_waterways():
-    """Returns verified regional receiving waterways (Kali Bein, Kala Sanghian, Chaheru stream, Phagwara Choe)."""
+    """Returns verified regional receiving waterways (legacy combined view)."""
     return osm_provider.get_waterways()
+
+@router.get("/natural-waterways")
+def get_natural_waterways():
+    """Returns verified natural river and stream corridors (Kali Bein river, Chaheru stream)."""
+    return osm_provider.get_natural_waterways()
+
+@router.get("/urban-drainage")
+def get_urban_drainage():
+    """Returns engineered municipal stormwater drains (Kala Sanghian drain, Phagwara Choe, NH-44 saucer drains)."""
+    return osm_provider.get_urban_drainage()
 
 @router.get("/infrastructure")
 def get_critical_infrastructure(region_id: Optional[str] = None):
